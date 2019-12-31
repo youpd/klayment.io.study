@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <title>Klayment buyer</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="index.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="modal fade" tabindex="-1" role="dialog" id="loginModal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">         
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="keystore">Keystore</label>
+              <input type="file" id="keystore" onchange="App.handleImport()">
+            </div>
+            <div class="form-group">
+              <label for="input-password">비밀번호</label>
+              <input type="password" class="form-control" id="input-password" onchange="App.handlePassword()">
+              <p class="help-block" id="message"></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" id="submit" onclick="App.handleLogin()">제출</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="container">
+      <div class="py-5 text-center">
+        <img src="https://tuna.gg/img/klayment.svg" alt="" width="288" height="288">
+      </div>
+        <div class="col-md-12 order-md-1">
+          <form class="needs-validation" novalidate>
+            <hr class="mb-4">
+            <div class="alert alert-primary">
+              <h4 class="alert-heading">Klayment+ details</h4>
+              <hr>
+              <b>판매자 Address</b><br><p>0xf50cd94312ba54a9a2c3553bde21c50d364aa943 <i class="far fa-copy"></i></p> 
+              <b>결제 아이템 :</b><br><p>디블랩의 집행검</p>
+              <b>아이템 설명 :</b><br><p>STR+20 추가 대미지+2,000 근거리 명중+120 기술 적중+7 근거리 치명타+1</p>
+              <hr>
+              <p class="text-center"><img src="https://tuna.gg/img/klay.png" alt="" width="36" height="36"> <b>200,000 Klay</b></p>
+              <h2 class="text-center">00:59:57</h2>
+              <p class="text-center">[ 지정한 시간내에 판매자에게 Klay를 전송하지 않을시 <b>거래는 종료</b> 됩니다. ]</p>
+            </div>
+
+            <hr class="mb-4">
+            <button type="button" 
+                    class="btn btn-primary btn-lg btn-block" 
+                    id="login" 
+                    data-toggle="modal"
+                    data-target="#loginModal">
+            Klayment Login
+            </button>
+            <button type="button" 
+                    class="btn btn-primary btn-lg btn-block" 
+                    id="logout" 
+                    style="display: none;"
+                    onclick="App.handleLogout()">
+            Klayment Logout
+            </button>
+          </form>
+        </div>
+      </div>
+    
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2019 D*Block LAB(DBL) - Klayment+</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li> 
+          <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+      </footer>
+    </div>
+    
+</body>
+
+</html>
+
+<style>
+  .yellow-box {
+    background-color: #FFC;
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 500px;
+    font-size: 80px;
+  }
+
+  #timer {
+    font-size: 80px;
+    color: red;
+  }
+
+  @keyframes spinner-line-fade-more {
+    0%, 100% {
+      opacity: 0;
+    }
+    1% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes spinner-line-fade-quick {
+    0%, 39%, 100% {
+      opacity: 0.25;
+    }
+    40% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes spinner-line-fade-default {
+    0%, 100% {
+      opacity: 0.22;
+    }
+    1% {
+      opacity: 1;
+    }
+  }
+</style>

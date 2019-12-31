@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="theme-color" content="#000000">
+  <title>Klayment seller</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="index.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <!-- Popper JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="modal fade" tabindex="-1" role="dialog" id="loginModal">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">         
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="keystore">Keystore</label>
+              <input type="file" id="keystore" onchange="App.handleImport()">
+            </div>
+            <div class="form-group">
+              <label for="input-password">비밀번호</label>
+              <input type="password" class="form-control" id="input-password" onchange="App.handlePassword()">
+              <p class="help-block" id="message"></p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" id="submit" onclick="App.handleLogin()">제출</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="container">
+      <div class="py-5 text-center">
+        <img src="https://tuna.gg/img/klayment.svg" alt="" width="288" height="288">
+      </div>
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3">Billing Klayment Generate</h4>
+          <form class="needs-validation" novalidate>
+            <button type="button" 
+                    class="btn btn-primary btn-lg btn-block" 
+                    id="login" 
+                    data-toggle="modal"
+                    data-target="#loginModal">
+            Klayment Login
+            </button>
+            <button type="button" 
+                    class="btn btn-primary btn-lg btn-block" 
+                    id="logout" 
+                    style="display: none;"
+                    onclick="App.handleLogout()">
+            Klayment Logout
+            </button>
+            <hr class="mb-4">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">판매자의 KlayWallet</label>
+                <input type="text" class="form-control" id="address" placeholder="" value="" disabled>
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">구매자의 KlayWallet <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="">
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address">결제 아이템명 <span class="text-muted">(Name)</span></label>
+              <input type="text" class="form-control" id="address" placeholder="결제하는 상품명을 입력하세요." required>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address">아이템 설명 <span class="text-muted">(Description)</span></label>
+              <input type="text" class="form-control" id="address" placeholder="결제하는 상품에 대한 설명을 입력하세요." required>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName">상품의 번호 <span class="text-muted">(고객에겐 보이지 않습니다.)</span></label>
+                <input type="text" class="form-control" id="address" placeholder="" value="">
+                <div class="invalid-feedback">
+                  Valid first name is required.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName">상품의 인보이스 <span class="text-muted">(고객에겐 보이지 않습니다.)</span></label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="">
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-10 mb-3">
+                <label for="username">결제 아이템의 단가</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="https://tuna.gg/img/klay.png" alt="" width="24" height="24"> Klay</span>
+                  </div>
+                  <input type="text" class="form-control" id="username" placeholder="구매자에게 받으실 Klay를 입력해주세요." required>
+                  <div class="invalid-feedback" style="width: 100%;">
+                    Your username is required.
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 mb-3">
+                <label for="lastName">Fee</label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="0.1%" disabled>
+                <div class="invalid-feedback">
+                  Valid last name is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address">결제 성공시 이동될 Callback URL</label>
+              <input type="text" class="form-control" id="address" placeholder="https://" required>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="address">결제 취소시 이동될 Callback URL</label>
+              <input type="text" class="form-control" id="address" placeholder="https://" required>
+              <div class="invalid-feedback">
+                Please enter your shipping address.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email">상세한 결제내역 받으실 Email <span class="text-muted">(Optional)</span></label>
+              <input type="email" class="form-control" id="email" placeholder="dbl.mains@gmail.com">
+              <div class="invalid-feedback">
+                Please enter a valid email address for shipping updates.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="country">결제 유효시간</label>
+              <select class="custom-select d-block w-100" id="country" required="">
+                <option value="">유효한 시간을 선택하세요.</option>
+                <option>+ 5분</option>
+                <option>+ 30분</option>
+                <option>+ 1시간</option>
+                <option>+ 6시간</option>
+                <option>+ 1일</option>
+                <option>+ 30일</option>
+                <option>+ 무기한</option>
+              </select>
+              <div class="invalid-feedback">
+                Please select a valid country.
+              </div>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-danger btn-lg btn-block" type="submit" onclick="App.start()">Klayment+ 간편결제 생성하기</button>
+          </form>
+        </div>
+      </div>
+    
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2019 D*Block LAB(DBL) - Klayment+</p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="#">Terms</a></li> 
+          <li class="list-inline-item"><a href="#">Support</a></li>
+        </ul>
+      </footer>
+    </div>
+    
+</body>
+
+</html>
+
+<style>
+  .yellow-box {
+    background-color: #FFC;
+    padding: 2rem;
+    margin: 0 auto;
+    max-width: 500px;
+    font-size: 80px;
+  }
+
+  #timer {
+    font-size: 80px;
+    color: red;
+  }
+
+  @keyframes spinner-line-fade-more {
+    0%, 100% {
+      opacity: 0;
+    }
+    1% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes spinner-line-fade-quick {
+    0%, 39%, 100% {
+      opacity: 0.25;
+    }
+    40% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes spinner-line-fade-default {
+    0%, 100% {
+      opacity: 0.22;
+    }
+    1% {
+      opacity: 1;
+    }
+  }
+</style>
